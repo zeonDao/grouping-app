@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>グループ分けアプリ</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .group { margin: 10px; padding: 10px; border: 1px solid #000; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>グループ分けアプリ</h1>
+    <button onclick="grouping()">グループ分け開始</button>
+    <div id="result"></div>
+    <script>
+        function grouping() {
+            const members = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Jack"];
+            let shuffled = members.sort(() => 0.5 - Math.random());
+            let groups = [];
+            while (shuffled.length) {
+                groups.push(shuffled.splice(0, 3));
+            }
+            document.getElementById("result").innerHTML = groups.map(g => `<div class="group">${g.join(", ")}</div>`).join("");
+        }
+    </script>
+</body>
+</html>
