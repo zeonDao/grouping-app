@@ -7,19 +7,40 @@
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
         .group { margin: 10px; padding: 10px; border: 1px solid #000; display: inline-block; }
+        .member-list { text-align: left; display: inline-block; }
     </style>
 </head>
 <body>
     <h1>グループ分けアプリ</h1>
+    <h3>参加するメンバーを選択してください</h3>
+    <div class="member-list">
+        <label><input type="checkbox" value="Alice"> Alice</label><br>
+        <label><input type="checkbox" value="Bob"> Bob</label><br>
+        <label><input type="checkbox" value="Charlie"> Charlie</label><br>
+        <label><input type="checkbox" value="Dave"> Dave</label><br>
+        <label><input type="checkbox" value="Eve"> Eve</label><br>
+        <label><input type="checkbox" value="Frank"> Frank</label><br>
+        <label><input type="checkbox" value="Grace"> Grace</label><br>
+        <label><input type="checkbox" value="Hannah"> Hannah</label><br>
+        <label><input type="checkbox" value="Isaac"> Isaac</label><br>
+        <label><input type="checkbox" value="Jack"> Jack</label><br>
+    </div>
+    <br><br>
     <button onclick="grouping()">グループ分け開始</button>
     <div id="result"></div>
     <script>
         function grouping() {
-            const members = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Jack"];
-            let shuffled = members.sort(() => 0.5 - Math.random());
+            // チェックされたメンバーを取得
+            const selectedMembers = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(cb => cb.value);
+            if (selectedMembers.length < 7) {
+                alert("最低7人を選択してください！");
+                return;
+            }
+
+            let shuffled = selectedMembers.sort(() => 0.5 - Math.random());
             let groups = [];
             while (shuffled.length) {
-                groups.push(shuffled.splice(0, 3));
+                groups.push(shuffled.splice(0, Math.min(4, shuffled.length)));
             }
             document.getElementById("result").innerHTML = groups.map(g => `<div class="group">${g.join(", ")}</div>`).join("");
         }
